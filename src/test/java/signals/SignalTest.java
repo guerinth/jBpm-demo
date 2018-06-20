@@ -18,7 +18,7 @@ public class SignalTest extends JbpmJUnitBaseTestCase {
 	}
 
 	@Test
-	public void testProcess() {
+	public void testBroadcastSignal() {
 		// create runtime manager
 		Map<String, ResourceType> resources = new HashMap<>();
 		resources.put("signals/FooProcess.bpmn2", ResourceType.BPMN2);
@@ -32,15 +32,14 @@ public class SignalTest extends JbpmJUnitBaseTestCase {
 		// get access to KieSession instance
 		KieSession ksession = runtimeEngine.getKieSession();
 
-		Map<String, Object> parameters = new HashMap<>();
+		// start process
+		ProcessInstance fooProcess1 = ksession.startProcess("signals.FooProcess");
+		ProcessInstance fooProcess2 = ksession.startProcess("signals.FooProcess");
 
+		// start process
+		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("itemType", "foo");
 
-		// start process
-		ProcessInstance fooProcess = ksession.startProcess("signals.FooProcess");
-		// assertProcessInstanceActive(fooProcess.getId());
-
-		// start process
 		ProcessInstance mainProcess = ksession.startProcess("signals.MainSignallingProcess", parameters);
 
 		try {
@@ -51,7 +50,8 @@ public class SignalTest extends JbpmJUnitBaseTestCase {
 
 		// check what nodes have been triggered
 		assertNodeTriggered(mainProcess.getId(), "Script Task 2", "Script Task 3", "foo");
-		assertNodeTriggered(fooProcess.getId(), "StartProcess", "Log", "Event Based Gateway 1", "wait for foo", "log");
+		assertNodeTriggered(fooProcess1.getId(), "StartProcess", "Log", "Event Based Gateway 1", "wait for foo", "End Event 1");
+		assertNodeTriggered(fooProcess2.getId(), "StartProcess", "Log", "Event Based Gateway 1", "wait for foo", "End Event 1");
 	}
 
 	@Test
