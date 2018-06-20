@@ -17,6 +17,9 @@ public class SignalTest extends JbpmJUnitBaseTestCase {
 		super(false, false);
 	}
 
+	/**
+	 * The 2 process instances of fooProcess must catch the single signal sent by MainSignallingProcess.
+	 */
 	@Test
 	public void testBroadcastSignal() {
 		// create runtime manager
@@ -52,6 +55,35 @@ public class SignalTest extends JbpmJUnitBaseTestCase {
 		assertNodeTriggered(mainProcess.getId(), "Script Task 2", "Script Task 3", "foo");
 		assertNodeTriggered(fooProcess1.getId(), "StartProcess", "Log", "Event Based Gateway 1", "wait for foo", "End Event 1");
 		assertNodeTriggered(fooProcess2.getId(), "StartProcess", "Log", "Event Based Gateway 1", "wait for foo", "End Event 1");
+	}
+
+	/**
+	 * Only one of the 2 process instances of fooProcess must catch the single signal sent by the api.
+	 */
+	@Test
+	public void testFooProcessWithUnicastSignal() {
+		// create runtime manager
+		Map<String, ResourceType> resources = new HashMap<>();
+		resources.put("signals/FooProcess.bpmn2", ResourceType.BPMN2);
+
+		createRuntimeManager(resources);
+
+		// take RuntimeManager to work with process engine
+		RuntimeEngine runtimeEngine = getRuntimeEngine();
+
+		// get access to KieSession instance
+		KieSession ksession = runtimeEngine.getKieSession();
+
+		// start process
+		ProcessInstance fooProcess1 = ksession.startProcess("signals.FooProcess");
+		ProcessInstance fooProcess2 = ksession.startProcess("signals.FooProcess");
+
+		ksession.signalEvent("fooSignal", null, fooProcess1.getId());
+
+		// check what nodes have been triggered
+		assertNodeTriggered(fooProcess1.getId(), "End Event 1");
+		// check what node is still active
+		assertNodeActive(fooProcess2.getId(), ksession, "Timeout 3s");
 	}
 
 	@Test

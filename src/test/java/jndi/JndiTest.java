@@ -1,6 +1,9 @@
 package jndi;
 
+import javax.naming.NamingException;
+
 import org.jbpm.test.JbpmJUnitBaseTestCase;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
@@ -14,7 +17,9 @@ public class JndiTest extends JbpmJUnitBaseTestCase {
 	}
 
 	@Test
-	public void testGetUrl() {
+	@Ignore
+	public void testGetUrl() throws NamingException {
+
 		// create runtime manager with single process
 		createRuntimeManager("jndi/getUrlsFromJndi.bpmn2");
 

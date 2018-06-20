@@ -60,15 +60,15 @@
         </bpmn2:outputSet>
         <bpmn2:signalEventDefinition id="SignalEventDefinition_1" signalRef="Signal_1"/>
       </bpmn2:startEvent>
-      <bpmn2:scriptTask id="ScriptTask_2" name="Signal erreur" scriptFormat="http://www.java.com/java">
+      <bpmn2:scriptTask id="ScriptTask_2" name="Log" scriptFormat="http://www.java.com/java">
         <bpmn2:extensionElements>
           <tns:metaData name="elementname">
-            <tns:metaValue><![CDATA[Signal erreur]]></tns:metaValue>
+            <tns:metaValue><![CDATA[Log]]></tns:metaValue>
           </tns:metaData>
         </bpmn2:extensionElements>
         <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
         <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
-        <bpmn2:script>System.err.println(&quot;Signal erreur recu&quot; + monException);</bpmn2:script>
+        <bpmn2:script>System.err.println(&quot;Signal erreur recu&quot;); // + monException);</bpmn2:script>
       </bpmn2:scriptTask>
       <bpmn2:sequenceFlow id="SequenceFlow_6" tns:priority="1" sourceRef="StartEvent_4" targetRef="ScriptTask_2"/>
       <bpmn2:endEvent id="EndEvent_3" name="Signal handled">
@@ -133,7 +133,7 @@
       <bpmndi:BPMNShape id="BPMNShape_ScriptTask_2" bpmnElement="ScriptTask_2" isExpanded="true">
         <dc:Bounds height="50.0" width="110.0" x="200.0" y="155.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_10">
-          <dc:Bounds height="15.0" width="71.0" x="219.0" y="172.0"/>
+          <dc:Bounds height="15.0" width="21.0" x="244.0" y="172.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_EndEvent_3" bpmnElement="EndEvent_3">

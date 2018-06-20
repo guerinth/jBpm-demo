@@ -64,7 +64,7 @@ public class DecoratorTest extends JbpmJUnitBaseTestCase {
 		assertProcessInstanceAborted(processInstance.getId());
 
 		// check what nodes have been triggered
-		assertNodeTriggered(processInstance.getId(), "Signal erreur");
+		assertNodeTriggered(processInstance.getId(), "Log");
 
 	}
 }
