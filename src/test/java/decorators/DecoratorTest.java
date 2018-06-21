@@ -1,10 +1,15 @@
 package decorators;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.jbpm.bpmn2.handler.LoggingTaskHandlerDecorator;
 import org.jbpm.bpmn2.handler.ServiceTaskHandler;
 import org.jbpm.bpmn2.handler.SignallingTaskHandlerDecorator;
 import org.jbpm.test.JbpmJUnitBaseTestCase;
+import org.junit.Before;
 import org.junit.Test;
+import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.process.ProcessInstance;
@@ -16,10 +21,17 @@ public class DecoratorTest extends JbpmJUnitBaseTestCase {
 		super(true, true);
 	}
 
+	@Before
+	public void setupKie() {
+		// create runtime manager with single process
+		Map<String, ResourceType> resources = new HashMap<>();
+		resources.put("errors/Decorators.bpmn2", ResourceType.BPMN2);
+
+		createRuntimeManager(resources);
+	}
+
 	@Test
 	public void testLoggingTaskHandlerDecorator() {
-		// create runtime manager with single process
-		createRuntimeManager("errors/Decorators.bpmn2");
 
 		// take RuntimeManager to work with process engine
 		RuntimeEngine runtimeEngine = getRuntimeEngine();
@@ -43,8 +55,6 @@ public class DecoratorTest extends JbpmJUnitBaseTestCase {
 
 	@Test
 	public void testSignallingTaskHandlerDecorator() {
-		// create runtime manager with single process
-		createRuntimeManager("errors/Decorators.bpmn2");
 
 		// take RuntimeManager to work with process engine
 		RuntimeEngine runtimeEngine = getRuntimeEngine();

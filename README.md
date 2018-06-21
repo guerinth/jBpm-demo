@@ -8,3 +8,4 @@ Various jBpm 6.4 demos combined in a single project.
 - **signals**
 - **errors**
 - **compensation**
+- **order process**

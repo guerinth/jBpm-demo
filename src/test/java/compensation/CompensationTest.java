@@ -64,7 +64,7 @@ public class CompensationTest extends JbpmJUnitBaseTestCase {
 		// get access to KieSession instance
 		KieSession ksession = runtimeEngine.getKieSession();
 
-		// Register a test handler for "Email":
+		// Register a test handler
 		ServiceTaskHandler testHandler = new ServiceTaskHandler();
 		ksession.getWorkItemManager().registerWorkItemHandler("Service Task", testHandler);
 

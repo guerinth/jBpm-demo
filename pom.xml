@@ -7,7 +7,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jbpm.version>6.5.0.Final-redhat-21</jbpm.version>
+		<jbpm.version>6.5.0.Final-redhat-23</jbpm.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
