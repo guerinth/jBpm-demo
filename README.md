@@ -4,7 +4,7 @@ Various jBpm 6.4 demos combined in a single project.
 
 ## The demos
 
-- **jndi**
+- **how to use environment variables for Urls WS/Rest**
 - **signals**
 - **errors**
 - **compensation**
